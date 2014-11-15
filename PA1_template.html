@@ -55,7 +55,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div>
 
 
-<p>Created by: Amy Su Jiang<br />Date: November 14th, 2014<br /> </p>
+<p>Created by: Amy Su Jiang<br />Date: November 14th, 2014</p>
 <div id="loading-and-processing-the-data" class="section level3">
 <h3>Loading and processing the data</h3>
 <p><strong>1. Load the data (i.e. read.csv())</strong></p>
@@ -63,7 +63,6 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 data  &lt;- read.csv(&quot;activity.csv&quot;, colClasses = c(&quot;integer&quot;, &quot;Date&quot;, &quot;factor&quot;))</code></pre>
 <p><strong>2. Process/transform the data (if necessary) into a format suitable for your analysis</strong></p>
 <pre class="r"><code>data_noNA  &lt;- na.omit(data)</code></pre>
-<p> </p>
 </div>
 <div id="what-is-mean-total-number-of-steps-taken-per-day" class="section level3">
 <h3>What is mean total number of steps taken per day?</h3>
@@ -83,7 +82,6 @@ print(histGraph)</code></pre>
 <p>The median of total number of steps taken per day is:</p>
 <pre class="r"><code>median(aggregate(data_noNA$steps, list(Date = data_noNA$date), FUN = &quot;sum&quot;)$x)</code></pre>
 <pre><code>## [1] 10765</code></pre>
-<p> </p>
 </div>
 <div id="what-is-the-average-daily-activity-pattern" class="section level3">
 <h3>What is the average daily activity pattern?</h3>
@@ -100,7 +98,6 @@ print(plotGraph)</code></pre>
 <pre class="r"><code>avgSteps[avgSteps$meanOfSteps == max(avgSteps$meanOfSteps), ]</code></pre>
 <pre><code>##     interval meanOfSteps
 ## 104      835    206.1698</code></pre>
-<p> </p>
 </div>
 <div id="imputing-missing-values" class="section level3">
 <h3>Imputing missing values</h3>
@@ -132,7 +129,7 @@ newMean - oldMean</code></pre>
 <pre><code>## [1] 0</code></pre>
 <pre class="r"><code>newMedian - oldMedian</code></pre>
 <pre><code>## [1] 1.188679</code></pre>
-<p><em>Hence the new mean of total steps taken per day is the same as that of the old mean, but the new median of total steps taken per day is greater than that of the old median.</em><br /> </p>
+<p><em>Hence the new mean of total steps taken per day is the same as that of the old mean, but the new median of total steps taken per day is greater than that of the old median.</em></p>
 </div>
 <div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level3">
 <h3>Are there differences in activity patterns between weekdays and weekends?</h3>

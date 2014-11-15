@@ -5,7 +5,6 @@ output: html_document
 
 Created by: Amy Su Jiang  
 Date: November 14th, 2014  
-\ 
 
 ### Loading and processing the data
 
@@ -19,7 +18,6 @@ __2. Process/transform the data (if necessary) into a format suitable for your a
 ```{r}
 data_noNA  <- na.omit(data)
 ```
-\ 
 
 ### What is mean total number of steps taken per day?  
 For this part of the assignment, you can ignore the missing values in the dataset.  
@@ -45,7 +43,6 @@ The median of total number of steps taken per day is:
 ```{r}
 median(aggregate(data_noNA$steps, list(Date = data_noNA$date), FUN = "sum")$x)
 ```
-\ 
   
 ### What is the average daily activity pattern?    
 __1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)__
@@ -63,7 +60,7 @@ __2. Which 5-minute interval, on average across all the days in the dataset, con
 ```{r}
 avgSteps[avgSteps$meanOfSteps == max(avgSteps$meanOfSteps), ]
 ```
-\ 
+
   
 ### Imputing missing values
 __1. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs__
@@ -104,7 +101,7 @@ newMean - oldMean
 newMedian - oldMedian
 ```    
 _Hence the new mean of total steps taken per day is the same as that of the old mean, but the new median of total steps taken per day is greater than that of the old median._  
-\ 
+
   
 ### Are there differences in activity patterns between weekdays and weekends?  
 __1. Create a new factor variable in the dataset with two levels -- "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.__
