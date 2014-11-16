@@ -24,11 +24,12 @@ __1. Make a histogram of the total number of steps taken each day__
 data_noNA$month  <- as.numeric(format(data_noNA$date,"%m"))
 library(ggplot2)
 histGraph <- ggplot(data_noNA, aes(date, steps))
-histGraph <- histGraph + geom_bar(stat = "identity", color="steel blue", fill="steel blue", width = 0.7)
+histGraph <- histGraph + geom_bar(stat = "identity", color="light blue", fill="light blue", width = 0.7)
 histGraph <- histGraph + facet_grid(.~month, scales = "free")
 histGraph <- histGraph + labs(title="Histograph of Total Number of Steps Taken Each Day\n")
 print(histGraph)
 ```
+<img src="image1.png">  
   
 __2. Calculate and report the mean and median total number of steps taken per day__
 The mean of total number of steps taken per day is:  
@@ -48,11 +49,12 @@ avgSteps <- aggregate(data_noNA$steps, list(interval = as.numeric(as.character(d
 names(avgSteps)[2] <- "meanOfSteps"
 
 plotGraph <- ggplot(avgSteps, aes(interval, meanOfSteps))
-plotGraph <- plotGraph + geom_line(color = "steel blue", size = 0.8)
+plotGraph <- plotGraph + geom_line(color = "light blue", size = 0.8)
 plotGraph <- plotGraph + labs(title = "Time Series Plot of the 5-minute Interval\n")
 print(plotGraph)
 ```
-  
+<img src="image2.png">
+
 __2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?__ 
 ```{r}
 avgSteps[avgSteps$meanOfSteps == max(avgSteps$meanOfSteps), ]
@@ -82,12 +84,13 @@ __4. Make a histogram of the total number of steps taken each day and Calculate 
 ```{r}
 data_new$month  <- as.numeric(format(data_new$date,"%m"))
 histGraph1 <- ggplot(data_new, aes(date, steps))
-histGraph1 <- histGraph1 + geom_bar(stat = "identity", color="steel blue", fill="steel blue", width = 0.7)
+histGraph1 <- histGraph1 + geom_bar(stat = "identity", color="light blue", fill="light blue", width = 0.7)
 histGraph1 <- histGraph1 + facet_grid(.~month, scales = "free")
 histGraph1 <- histGraph1 + labs(title="Histograph of Total Number of Steps Taken Each Day \n(No Missing Values)\n")
 print(histGraph1)
 ```
-  
+<img src="image3.png">  
+
 __Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?__
 ```{r}
 oldMean <- mean(aggregate(data_noNA$steps, list(Date = data_noNA$date), FUN = "sum")$x)
@@ -121,4 +124,5 @@ library(lattice)
 xyplot(avgSteps$meanOfSteps ~ avgSteps$interval | avgSteps$weekdays,
        layout = c(1, 2), type = "l", 
        xlab = "Interval", ylab = "Number of steps")
-```
+```  
+<img src="image4.png">  
