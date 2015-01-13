@@ -1,4 +1,10 @@
-## Introduction
+---
+title: "Course Project 1"
+author: "Amy Su Jiang"
+output: html_document
+---
+
+### Introduction
 
 It is now possible to collect a large amount of data about personal
 movement using activity monitoring devices such as a
@@ -18,7 +24,7 @@ day. The data consists of two months of data from an anonymous
 individual collected during the months of October and November, 2012
 and include the number of steps taken in 5 minute intervals each day.
 
-## Data
+### Data
 
 The data for this assignment can be downloaded from the course web
 site:
@@ -44,7 +50,7 @@ are a total of 17,568 observations in this
 dataset.
 
 
-## Assignment
+### Assignment
 
 This assignment will be described in multiple parts. You will need to
 write a report that answers the questions detailed below. Ultimately,
@@ -133,7 +139,7 @@ using the lattice system but you can make the same version of the plot
 using any plotting system you choose.
 
 
-## Submitting the Assignment
+### Submitting the Assignment
 
 To submit the assignment:
 
