@@ -13,6 +13,10 @@ Suppose I conduct a study and publish my findings. Which of the following is an 
     I take my own data, analyze it again, and publish new findings.
     An investigator at another institution conducts a study addressing a different scientific question and publishes her findings.
     I give my data to an independent investigator at another institution, she analyzes the data and gets the same results as I originally obtained.
+    
+```
+Answer: I give my data to an independent investigator at another institution, she analyzes the data and gets the same results as I originally obtained. 
+```
 
 ### Question 2
 
@@ -23,6 +27,10 @@ Which of the following is a requirement for a published data analysis to be repr
     The investigator makes the analytic data publicly available.
     The analysis is conducted on a variant of the Unix operating system.
 
+```
+Answer: The investigator makes the analytic data publicly available.
+```
+
 ### Question 3
 
 Which of the following is an example of a reproducible study?
@@ -31,6 +39,10 @@ Which of the following is an example of a reproducible study?
     The study's original authors re-run their computer code on their analytic data and confirm publicly that the findings match those of the published results.
     The study's analytic data and computer code for the data analysis are publicly available. When the code is run on the analytic data, the findings are identical to the published results.
     The study's analytic data are publicly available, but the computer code is not.
+
+```
+Answer: The study's analytic data and computer code for the data analysis are publicly available. When the code is run on the analytic data, the findings are identical to the published results.
+```
 
 ### Question 4
 
@@ -41,6 +53,10 @@ Which of the following is a reason that a study might NOT be fully replicated?
     The original study was conducted by a well-known investigator.
     The original study was published in a high impact journal and is considered authoritative.
 
+```
+Answer: The original study was opportunistic in its timing and it would be difficult to find a similar context in which to repeat it.
+```
+
 ### Question 5
 
 Which of the following is a reason why publishing reproducible research is increasingly important?
@@ -49,6 +65,10 @@ Which of the following is a reason why publishing reproducible research is incre
     Computing power is limited today, making it difficult to apply sophisticated statistical methods.
     New technologies are increasing the rate of data collection, creating datasets that are more complex and extremely high dimensional.
     The statistical methods for most studies can be accurately described using plain language.
+
+```
+Answer: New technologies are increasing the rate of data collection, creating datasets that are more complex and extremely high dimensional.
+```
 
 ### Question 6
 
@@ -59,6 +79,10 @@ What is the role of processing code in the research pipeline?
     It transforms the computational results into figures and tables.
     It transforms the measured data into analytic data.
 
+```
+Answer: It transforms the measured data into analytic data.
+```
+
 ### Question 7
 
 Which is a goal of literate statistical programming?
@@ -67,6 +91,10 @@ Which is a goal of literate statistical programming?
     Combine explanatory text and data analysis code in a single document.
     Require that data analysis summaries are always written in LaTeX.
     Ensure that data analysis documents are always exported in PDF format.
+
+```
+Answer: Combine explanatory text and data analysis code in a single document.
+```
 
 ### Question 8
 
@@ -77,6 +105,10 @@ What does it mean to weave a literate statistical program?
     Transform the literate program into a human readable document.
     Transform the literate program into a machine readable code file.
 
+```
+Answer: Transform the literate program into a human readable document.
+```
+
 ### Question 9
 
 Which of the following is required to implement a literate programming system?
@@ -85,6 +117,10 @@ Which of the following is required to implement a literate programming system?
     A cloud-based computing service for running computations.
     A programming language like R.
     A Unix-based computer system.
+    
+```
+Answer: A programming language like R.
+```
 
 ### Question 10
 
@@ -94,3 +130,7 @@ What is one way in which the knitr system differs from Sweave?
     knitr allows for the use of markdown instead of LaTeX.
     knitr lacks features like caching of code chunks.
     knitr is written in python instead of R.
+
+```
+Answer: knitr allows for the use of markdown instead of LaTeX. 
+```

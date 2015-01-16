@@ -1,0 +1,169 @@
+<div align="center"> 
+### Impact of Severe Weather Events 
+### on Public Health and Economy of the United States
+
+Amy Jiang    
+November 21 2014  </div>
+___
+  
+#### Problem Statement
+The basic goal of this assignment is to explore the NOAA Storm Database and answer some basic questions about severe weather events. You must use the database to answer the questions below and show the code for your entire analysis:
+
+- Across the United States, which types of events (as indicated in the EVTYPE variable) are most harmful with respect to population health?  
+- Across the United States, which types of events have the greatest economic consequences?
+<br /><br />
+
+#### Basic settings
+```{r}
+echo = TRUE  # Always make code visible
+library(ggplot2)
+library(plyr)
+library(R.utils)
+```
+<br />
+
+#### Data Processing
+_The NOAA storm data file is downloaded from internet and unzipped to current folder._
+```{r}
+if (!"stormData.csv.bz2" %in% dir("./")) {
+    download.file("http://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2", destfile = "stormData.csv.bz2")
+}
+if(!"stormData.csv" %in% dir("./")) {
+    bunzip2("stormData.csv.bz2", "stormData.csv", overwrite=T, remove=F)
+}
+```
+  
+_The dimension, and content of NOAA data are studied._
+```{r}
+data.storm <- read.csv("stormData.csv", sep = ",")
+dim(data.storm)
+head(data.storm, n=3)
+```
+  
+_A plot graph of storm events distributed years showing that the storm data is more complete in recent years._
+```{r}
+# Since we will only care about the year of the event date, format it to the number of year
+data.storm$year <- as.numeric(format(as.Date(data.storm$BGN_DATE, format = "%m/%d/%Y %H:%M:%S"), "%Y"))
+# A quick histogram to see how data was distributed across the years
+hist(data.storm$year, xlab= "Year", breaks = 30, main = "Distribution of Weather Events Data over Years", col="steel blue")
+```
+  
+Following the histogram in above, we could see that the weather events captured since 1995 have been almost doubled than in the past.  We believe this increase in the number of captured events is due to the advancement of modern technlogy, which enabled scientists to record the event that they were not able to capture before.  Since our study is focused on the total impact of weather events over years, I have chosen to not discriminate data based on this known observance.  <br /><br />
+
+#### Study of Severe Weather Events' Impact on Public Health
+_We are interested to see the top 15 types of weather events that resulted fatalities and injuries._  
+
+_Top 15 types of weather events that have the highest fatality rate:_
+```{r}
+# Subtotal of fatablities by event type
+data.storm.fatality <- aggregate(data.storm[, "FATALITIES"], by = list(data.storm$EVTYPE), FUN = "sum", na.rm=T)
+# Sorting the data by numbers of fatalities in descending order
+data.storm.fatality  <- arrange(data.storm.fatality, data.storm.fatality[,2], decreasing=T)
+# Subsetting the top 15
+data.storm.fatality <- data.storm.fatality[1:15,]
+# Adding column headers
+colnames(data.storm.fatality)  <- c("Event.Type", "Fatalities")
+# Setting levels of Event.Type
+data.storm.fatality[,"Event.Type"]  <- factor(data.storm.fatality[,"Event.Type"], levels = data.storm.fatality[,"Event.Type"])
+
+# Show the top 15 fatality data
+data.storm.fatality
+
+# Plotting the figure
+ggplot(data.storm.fatality, aes(Event.Type, Fatalities)) + geom_bar(stat = "identity", color="steel blue", fill="steel blue", width = 0.7) + theme(axis.text.x = element_text(angle = 45, 
+    hjust = 1)) + labs(x="Event Type", y="Total No. of Fatalities", title="Total Fatalities by Severe Weather\n Events in the U.S.\n from 1950 - 2011\n")
+```
+
+_Top 15 types of weather events that have the highest injury rate:_
+```{r}
+# Subtotal of injuries by event type
+data.storm.injury <- aggregate(data.storm[, "INJURIES"], by = list(data.storm$EVTYPE), FUN = "sum", na.rm=T)
+# Sorting the data by numbers of injuries in descending order
+data.storm.injury  <- arrange(data.storm.injury, data.storm.injury[,2], decreasing=T)
+# Subsetting the top 15
+data.storm.injury <- data.storm.injury[1:15,]
+# Adding column headers
+colnames(data.storm.injury)  <- c("Event.Type", "Injuries")
+# Setting levels of Event.Type
+data.storm.injury[,"Event.Type"]  <- factor(data.storm.injury[,"Event.Type"], levels = data.storm.injury[,"Event.Type"])
+
+# Show the top 15 injury data
+data.storm.injury
+
+# Plotting the figure
+ggplot(data.storm.injury, aes(Event.Type, Injuries)) + geom_bar(stat = "identity", color="steel blue", fill="steel blue", width = 0.7) + theme(axis.text.x = element_text(angle = 45, 
+    hjust = 1)) + labs(x="Event Type", y="Total No. of Injuries", title="Total Injuries by Severe Weather\n Events in the U.S.\n from 1950 - 2011\n")
+```
+<br />
+
+#### Study of Severe Weather Events' Impact on Economy
+_We are interested to see the top 15 types of weeather events that resulted loss in property damage and crop damage._   
+
+_Top 15 types of weather events that have caused the highest property damage:_
+```{r}
+# Remove unnecessary columns from data
+data.storm.property.damage <- subset(data.storm, select = c("EVTYPE", "PROPDMG", "PROPDMGEXP"))
+# Transform the measurements to number
+data.storm.property.damage <- mutate(data.storm.property.damage, 
+                      PROPDMGTTL = ifelse(PROPDMGEXP=="k" | PROPDMGEXP=="K", 
+                                          PROPDMG * 1000, 
+                                          ifelse(PROPDMGEXP=="m" | PROPDMGEXP=="M",
+                                                 PROPDMG * 1000000,
+                                                 ifelse(PROPDMGEXP=="b" | PROPDMGEXP=="B",
+                                                        PROPDMG * 1000000000,
+                                                        ifelse(PROPDMGEXP=="h" | PROPDMGEXP=="H",
+                                                                PROPDMG * 100, PROPDMG)))))
+# Calculating total by event types
+data.storm.property.damage <- aggregate(data.storm.property.damage$PROPDMGTTL, by = list(data.storm.property.damage$EVTYPE), FUN = "sum", na.rm=T)
+# Sort
+data.storm.property.damage <- arrange(data.storm.property.damage, data.storm.property.damage[,2], decreasing=T)
+# Select top 15
+data.storm.property.damage <- data.storm.property.damage[1:15,]
+# Adding column names
+colnames(data.storm.property.damage)  <- c("Event.Type", "Property.Damage.Total")
+# Setting levels of Event Type
+data.storm.property.damage[,"Event.Type"]  <- factor(data.storm.property.damage[,"Event.Type"], levels = data.storm.property.damage[,"Event.Type"])
+
+# Display the top 15 property damage table
+data.storm.property.damage
+# Plotting the figure
+ggplot(data.storm.property.damage, aes(Event.Type, Property.Damage.Total/1e9)) + geom_bar(stat = "identity", color="steel blue", fill="steel blue", width = 0.7) + theme(axis.text.x = element_text(angle = 45, 
+    hjust = 1)) + labs(x="Event Type", y="Property Damage (in billion dollars)", title="Total Property Damages by Severe Weather\n Events in the U.S.\n from 1950 - 2011\n")
+```
+
+_Top 15 types of weather events that have caused the highest crop damage:_
+```{r}
+# Remove unnecessary columns from data
+data.storm.crop.damage <- subset(data.storm, select = c("EVTYPE", "CROPDMG", "CROPDMGEXP"))
+# Transform the measurements to number
+data.storm.crop.damage <- mutate(data.storm.crop.damage, 
+                      CROPDMGTTL = ifelse(CROPDMGEXP=="k" | CROPDMGEXP=="K", 
+                                          CROPDMG * 1000, 
+                                          ifelse(CROPDMGEXP=="m" | CROPDMGEXP=="M",
+                                                 CROPDMG * 1000000,
+                                                 ifelse(CROPDMGEXP=="b" | CROPDMGEXP=="B",
+                                                        CROPDMG * 1000000000,
+                                                        ifelse(CROPDMGEXP=="h" | CROPDMGEXP=="H",
+                                                                CROPDMG * 100, CROPDMG)))))
+# Calculating total by event types
+data.storm.crop.damage <- aggregate(data.storm.crop.damage$CROPDMGTTL, by = list(data.storm.crop.damage$EVTYPE), FUN = "sum", na.rm=T)
+# Sort
+data.storm.crop.damage <- arrange(data.storm.crop.damage, data.storm.crop.damage[,2], decreasing=T)
+# Select top 15
+data.storm.crop.damage <- data.storm.crop.damage[1:15,]
+# Adding column names
+colnames(data.storm.crop.damage)  <- c("Event.Type", "Crop.Damage.Total")
+# Setting levels of Event Type
+data.storm.crop.damage[,"Event.Type"]  <- factor(data.storm.crop.damage[,"Event.Type"], levels = data.storm.crop.damage[,"Event.Type"])
+
+# Display the top 15 property damage table
+data.storm.crop.damage
+# Plotting the figure
+ggplot(data.storm.crop.damage, aes(Event.Type, Crop.Damage.Total/1e9)) + geom_bar(stat = "identity", color="steel blue", fill="steel blue", width = 0.7) + theme(axis.text.x = element_text(angle = 45, 
+    hjust = 1)) + labs(x="Event Type", y="Crop Damage (in billion dollars)", title="Total Crop Damages by Severe Weather\n Events in the U.S.\n from 1950 - 2011\n")
+```
+<br />
+
+#### Conclusion
+Following our analysis on the provided data, Tornado and Excessive Heat are the top two severe weather events that have been most harmful to public health, while Drought and Flood are the top two severe weather events that have caused the greatest economic loss in the United States.
+<br />
